@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<div th:fragment="show">
+    <div class="media" th:each="avatarQuestion : ${pageDto.avatarQuestions}">
+        <div class="media-left media-middle">
+            <a href="#">
+                <img class="media-object img-rounded" th:src="${avatarQuestion.user.avatarUrl}">
+            </a>
+        </div>
+        <div class="media-body">
+            <h4 class="media-heading">
+                <a  style="text-decoration: none" th:text="${avatarQuestion.title}"th:href="@{'/questionmain/'+${avatarQuestion.id}}"></a></h4>
+            <span th:text="${avatarQuestion.description}"></span><br/>
+            <span class="indextextcss"><span th:text="${avatarQuestion.commentCount}"></span>个回复·
+                        <span th:text="${avatarQuestion.viewCount}"></span>次浏览
+                        <span th:text="${#dates.format(avatarQuestion.gmtCreate,'yyy/MM/dd HH:mm:ss')}"></span></span>
+        </div>
+    </div>
+</div>
+</body>
+</html>

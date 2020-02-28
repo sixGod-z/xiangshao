@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title> 个人中心 —— 湘韶社区</title>
+    <link rel="stylesheet" href="/css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="/css/bootstrap-theme.min.css"/>
+    <link rel="stylesheet" href="/css/allcss.css"/>
+    <script type="application/javascript" src="/js/jquery.min.js"></script>
+    <script type="application/javascript" src="/js/bootstrap.min.js"></script>
+</head>
+<body>
+<div th:insert="header :: header"></div>
+<div class="container-fluid fabutwodivcss">
+    <div class="row">
+        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-9">
+            <h3 th:text="${sectionName}"></h3>
+            <hr/>
+
+            <div th:insert="questionshow :: show"></div>
+
+
+        </div>
+        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-3">
+            <div class="list-group">
+                <a href="/profile/question"
+                   th:class="${section=='question'}? 'active list-group-item' : 'list-group-item'">
+                    我的问题</a>
+                <a href="/profile/revert" th:class="${section=='revert'}? 'active list-group-item' : 'list-group-item'">
+                    最新回复</a>
+            </div>
+        </div>
+
+    </div>
+    <div class="indexdivbuttoncss">
+        <a type="button" th:if="${pageDto.page!=1}" th:href="@{'/profile/'+${section}+'?page='+${pageDto.page-1}}"
+           class="btn btn-info btn-info ">&lt;&nbsp;上一页</a>
+        <a type="button" th:if="${pageDto.page==1}"
+           class="btn btn-info btn-info ">&lt;&nbsp;到顶了</a>
+        <div style="float: left;margin-top: 7px;font-size: 17px;">
+            <span th:text="${pageDto.page}"></span>
+            /
+            <span th:text="${pageDto.pages}"></span>
+        </div>
+
+        <a type="button" th:if="${pageDto.page!=pageDto.pages}"
+           th:href="@{'/profile/'+${section}+'?page='+${pageDto.page+1}}"
+           class="btn btn-info btn-info">下一页&nbsp;&gt;</a>
+        <a type="button" th:if="${pageDto.page==pageDto.pages}"
+           class="btn btn-info btn-info ">到顶了&nbsp;&gt;</a>
+        <div class="input-group col-lg-6" style="width: 100px;float: left;">
+            <input type="text" class="form-control a">
+            <span class="input-group-btn">
+                      <button class="btn btn-default" type="button" onclick="abc()">Go!</button>
+                 </span>
+        </div>
+    </div>
+<div class="indexerrorcss">
+</div>
+<br/>
+<br/>
+</div>
+</body>
+<script type="application/javascript" th:inline="javascript">
+
+    function abc() {
+        var inputpage = $(".a").val();
+        var reg = /^[0-9]*$/;
+        //判断是否为数字
+        if (reg.test(inputpage)) {
+            location.href = "/profile/" + [[${section}]] + "?page=" + inputpage;
+        } else {
+            $(".indexerrorcss").text("您输入的数字有误")
+        }
+    }
+</script>
+</html>
